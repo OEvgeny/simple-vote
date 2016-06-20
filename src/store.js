@@ -1,6 +1,6 @@
-import { createStore } from 'redux'
-import reducer from './reducer'
+import { createStore, combineReducers } from 'redux'
+import { votes } from './votes/reducer'
 
 export default function () {
-  return createStore(reducer)
+  return createStore(combineReducers({votes}))
 }

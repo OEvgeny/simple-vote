@@ -1,3 +1,3 @@
-import createStore from './src/store'
+import createStore from './store'
 
 export const store = createStore()
