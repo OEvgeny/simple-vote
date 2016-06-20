@@ -29,6 +29,8 @@ describe('store', () => {
         { type: actions.SET_ENTRIES, entries: ['foo', 'bar'] },
         { type: actions.NEXT },
         { type: actions.VOTE, entry: 'bar'},
+        { type: actions.NEXT },
+        { type: actions.NEXT },
         { type: actions.NEXT }
       ]
       const state = steps.reduce(votes, initial)
