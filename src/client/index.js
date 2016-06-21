@@ -2,6 +2,7 @@
 import snabbdom from 'snabbdom'
 import App from './App'
 import createStore from './store'
+import createClient from './client'
 
 const patch = snabbdom.init([
   require('snabbdom/modules/class'),          // makes it easy to toggle classes
@@ -12,18 +13,19 @@ const patch = snabbdom.init([
 
 function updateUI (vnode, store) {
   const newVnode = App(store.getState())
+  console.log(store.getState(), newVnode)
   return patch(vnode, newVnode)
 }
 
 function startApp () {
   const el = document.createElement('div')
   document.body.appendChild(el)
-  let vnode = el
 
   const store = createStore()
+  let vnode = updateUI(el, store)
   store.subscribe(() => { vnode = updateUI(vnode, store) })
 
-  updateUI(el, store)
+  const client = createClient(store)
 }
 
 startApp()

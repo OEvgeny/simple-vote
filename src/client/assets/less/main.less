@@ -1,0 +1,21 @@
+@import "variables";
+
+html {
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-size: calc(12px + .5vw);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: @page-background;
+  color: @font-color;
+}
+
+#app {
+  display: flex;
+  height: 100vh;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}

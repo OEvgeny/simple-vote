@@ -1,4 +1,7 @@
 /** @jsx html */
 import { html } from 'snabbdom-jsx'
+import { Votes } from './votes/components'
 
-export default (state) => (<div>{state.hello}</div>)
+import './assets/less/main.less'
+
+export default (state) => (<div selector="#app"><Votes votes={state.votes} /></div>)

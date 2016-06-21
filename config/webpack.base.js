@@ -1,5 +1,6 @@
 import webpack from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
+import autoprefixer from 'autoprefixer'
 
 export default {
   entry: [
@@ -7,11 +8,21 @@ export default {
     './src/client/index.js'
   ],
   module: {
-    loaders: [{
-      test: /\.jsx?$/,
-      exclude: /node_modules/,
-      loader: 'babel'
-    }]
+    loaders: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: 'babel'
+      },
+      {
+        test: /\.css?$/,
+        loader: 'style!css?sourceMap!postcss'
+      },
+      {
+        test: /\.less?$/,
+        loader: 'style!css?sourceMap!postcss!less?sourceMap&strictMath'
+      }
+    ]
   },
   resolve: {
     extensions: ['', '.js', '.jsx']
@@ -21,6 +32,7 @@ export default {
     publicPath: '/',
     filename: 'bundle.js'
   },
+  postcss: () => [autoprefixer({browsers: ['> 1%']})],
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
