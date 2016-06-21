@@ -12,5 +12,5 @@ export function next () {
 }
 
 export function vote (entry) {
-  return {type: vote, entry}
+  return {type: VOTE, entry}
 }

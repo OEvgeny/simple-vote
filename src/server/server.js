@@ -38,7 +38,7 @@ export default function startSocketIO (store) {
   )
 
   io.on('connection', socket => {
-    socket.emit('state', store.getState())
+    socket.emit('votes', store.getState().votes)
     socket.on('action', store.dispatch.bind(store))
   })
 }
