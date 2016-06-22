@@ -33,10 +33,6 @@ export default function startSocketIO (store) {
   // socket.io server
   const io = new SocketIO().attach(8090)
 
-  store.subscribe(
-    () => io.emit('state', store.getState())
-  )
-
   io.on('connection', socket => {
     socket.emit('votes', store.getState().votes)
     socket.on('action', store.dispatch.bind(store))

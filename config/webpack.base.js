@@ -1,12 +1,20 @@
 import webpack from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import autoprefixer from 'autoprefixer'
+import path from 'path'
 
 export default {
   entry: [
     './src/client/dev.js',
     './src/client/index.js'
   ],
+  resolve: {
+    extensions: ['', '.js', '.jsx', '.less'],
+    fallback: [path.join(__dirname, '../node_modules')]
+  },
+  resolveLoader: {
+    fallback: [path.join(__dirname, '../node_modules')]
+  },
   module: {
     loaders: [
       {
@@ -21,11 +29,15 @@ export default {
       {
         test: /\.less?$/,
         loader: 'style!css?sourceMap!postcss!less?sourceMap&strictMath'
+      },
+      {
+        test: /\.(svg|woff2?|eot|ttf|otf)(\?.*)?$/,
+        loader: 'url',
+        query: {
+          limit: 10000
+        }
       }
     ]
-  },
-  resolve: {
-    extensions: ['', '.js', '.jsx']
   },
   output: {
     path: __dirname + '/dist',

@@ -16,7 +16,7 @@ export function votes (state = initialState, action = {}) {
     case NEXT:
       const entries = state.entries.concat(getWinners(state.pair))
       if (entries.length === 1) return update(state, {winner: entries[0]})
-      else return update(state, getPair(state.entries))
+      else return update(state, getPair(entries))
     case VOTE:
       return update(state, {pair: vote(state.pair, action.entry)})
     default:

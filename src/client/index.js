@@ -3,6 +3,8 @@ import snabbdom from 'snabbdom'
 import App from './App'
 import createStore from './store'
 import createClient from './client'
+import { fetchVotes } from './votes/actions'
+import remoteActions from './remote-actions'
 
 const patch = snabbdom.init([
   require('snabbdom/modules/class'),          // makes it easy to toggle classes
@@ -21,11 +23,13 @@ function startApp () {
   const el = document.createElement('div')
   document.body.appendChild(el)
 
-  const store = createStore()
+  const client = createClient()
+  const store = createStore(remoteActions(client))
+  console.log(store)
   let vnode = updateUI(el, store)
   store.subscribe(() => { vnode = updateUI(vnode, store) })
 
-  const client = createClient(store)
+  client.on('votes', state => store.dispatch(fetchVotes(state)))
 }
 
 startApp()

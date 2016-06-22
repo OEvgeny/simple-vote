@@ -14,16 +14,18 @@ export const EntriesList = ({entries = []}) => (
     <div selector=".entiries-wrap">
       { entries.length
         ? entries.map(entry => (<div selector=".entries-list-item">{entry}</div>))
-        : <div selector=".entiries.placeholder">There is now entries.</div> }
+        : <div selector=".entiries-placeholder">There is no upcomming votes.</div> }
       </div>
   </div>
 )
 
 export const VoteBoard = ({pair, winner}) => (
   <div selector=".vote-board">
-    { !winner && pair
+    { pair && pair.length
       ? [<VoteHandle entry={pair[0]} />,<VoteHandle entry={pair[1]} />]
-      : <div selector=".vote-winner">{ winner || 'There is no winner now' }</div> }
+      : winner
+        ? <div selector=".vote-winner">{ winner }</div>
+        : <div selector=".vote-placeholder">There is no active voting</div> }
   </div>
 )
 
@@ -32,10 +34,14 @@ export const Votes = ({votes}) => {
   const names = Object.keys(pair || {})
   return (
     <div selector=".votes">
-      <h1>Voting</h1>
-      <VoteBoard pair={names} winner={winner} />
-      <h1>Upcomming</h1>
-      <EntriesList entries={entries} />
+      <section selector=".voting-section">
+        <h1>Voting</h1>
+        <VoteBoard pair={names} winner={winner} />
+      </section>
+      <section selector=".upcoming-section">
+        <h1>Upcomming</h1>
+        <EntriesList entries={entries} />
+      </section>
     </div>
   )
 }

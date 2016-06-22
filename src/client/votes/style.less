@@ -1,10 +1,9 @@
 @import "../assets/less/variables";
 
 .votes {
-  width: 100%;
+  width: 85%;
   max-width: 32rem;
   background-color: @vote-background;
-  border: @border;
   border-radius: @border-radius;
   box-shadow: @shadow-2;
   overflow: hidden;
@@ -14,8 +13,6 @@
   display: flex;
   flex-flow: column nowrap;
   text-align: center;
-  padding-top: .5rem;
-  box-sizing: border-box;
 
   h1 {
     font-weight: normal;
@@ -24,15 +21,30 @@
     color: lighten(@font-color, 14%);
   }
 
+  .voting-section {
+    padding-top: .5rem;
+    background-color: @primary-color;
+    color: @white-color;
+    h1 { color: darken(@white-color, 14%); }
+  }
+
+  .upcoming-section {
+    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    margin-top: .5rem;
+  }
+
   &:before {
     content: 'Votes';
     color: fade(#000, 3%);
-    font-weight: bold;
+    font-weight: 600;
     position: absolute;
-    right: -46%;
+    left: 12%;
     bottom: -12%;
-    font-size: 15.5rem;
+    font-size: 16.8rem;
     z-index: -1;
+    letter-spacing: -.11em;
   }
 
   .vote-board {
@@ -41,6 +53,21 @@
     flex-flow: row nowrap;
     flex-basis: 50%;
     flex-shrink: 0;
+    font-weight: 300;
+
+    .vote-placeholder {
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: fade(@white-color, 35%)
+    }
+
+    .vote-placeholder, .vote-winner {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: default;
+    }
 
     .vote-handle {
       width: 50%;
@@ -51,23 +78,26 @@
       font-size: 1.2rem;
       text-align: center;
       padding: 0 1rem;
-      margin: .5rem 0 .5rem 0;
+      margin: .5rem 0 1rem 0;
       &:first-child {
-        border-right: fade(#000, 10%) solid 1px;
+        border-right: fade(@white-color, 20%) solid 1px;
       }
 
       .vote-btn {
-        font-size: .8rem;
+        font-size: .6rem;
         padding: .4rem 1rem;
         margin: 1rem;
-        color: @white-color;
-        background-color: @primary-color;
+        color: @font-color;
+        background-color: fade(@white-color, 90%);
         cursor: pointer;
         box-shadow: @shadow-1;
         border: none;
+        outline: none;
         transition: background-color .23s ease;
+        text-transform: uppercase;
+        border-radius: @border-radius;
         &:hover {
-          background-color: saturate(@primary-color, 10%);
+          background-color: darken(@white-color, 20%);
         }
       }
     }
@@ -79,7 +109,16 @@
     cursor: default;
     margin: .5rem 2rem 2rem 2rem;
     overflow-y: auto;
-    height: 100%;
+
+    .entiries-placeholder {
+      min-height: 8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: fade(#000, 35%);
+      cursor: default;
+    }
 
     .entries-wrap {
       height: 100%;
@@ -88,7 +127,14 @@
     .entries-list-item {
       margin: .3rem 0;
       padding: .2rem 0;
-      &:not(:last-child) {
+      position: relative;
+      &:not(:last-child):after {
+        content: '';
+        position: absolute;
+        bottom: -.25rem;
+        left: 46%;
+        width: 8%;
+        height: .1rem;
         border-bottom: fade(#000, 8%) solid 1px;
       }
       &:hover {

@@ -26,15 +26,18 @@ describe('store', () => {
 
     it(`${actions.NEXT} sets winner then expected`, () => {
       const steps = [
-        { type: actions.SET_ENTRIES, entries: ['foo', 'bar'] },
+        { type: actions.SET_ENTRIES, entries: ['foo', 'bar', 'baz'] },
         { type: actions.NEXT },
         { type: actions.VOTE, entry: 'bar'},
         { type: actions.NEXT },
         { type: actions.NEXT },
+        { type: actions.NEXT },
+        { type: actions.VOTE, entry: 'bar'},
+        { type: actions.NEXT },
         { type: actions.NEXT }
       ]
       const state = steps.reduce(votes, initial)
-      expect(state).to.eql(update(initial, {entries: [], winner: 'bar', pair: {foo: 0, bar: 1}}))
+      expect(state).to.eql(update(initial, {entries: [], winner: 'bar', pair: {baz: 0, bar: 1}}))
     })
 
     it(`${actions.VOTE} adds vote to selected entry`, () => {
