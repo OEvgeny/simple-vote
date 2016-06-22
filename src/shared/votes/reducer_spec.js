@@ -18,6 +18,11 @@ describe('store', () => {
       expect(next).to.eql(update(initial, {entries: ['foo', 'bar', 'buz']}))
     })
 
+    it(`${actions.SET_ENTRIES} clears previouse winner`, () => {
+      const state = votes(update(initial, {winner: 'baz'}), actions.setEntries(['foo', 'bar']))
+      expect(state).to.eql(update(initial, {entries: ['foo', 'bar']}))
+    })
+
     it(`${actions.NEXT} gets next pair of entries`, () => {
       const state = votes(initial, actions.setEntries(['foo', 'bar']))
       const next = votes(state, actions.next())

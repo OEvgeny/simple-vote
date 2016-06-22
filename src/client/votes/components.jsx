@@ -2,10 +2,13 @@
 import { html } from 'snabbdom-jsx'
 import './style.less'
 
+import { store } from '../client'
+import { vote } from '../../shared/votes/actions'
+
 export const VoteHandle = ({entry}) => (
   <div selector=".vote-handle">
     <span>{ entry }</span>
-    <button selector=".vote-btn" role="button">Vote!</button>
+    <button on-click={store.dispatch.bind(null, vote(entry))} selector=".vote-btn" role="button">Vote!</button>
   </div>
 )
 
@@ -21,11 +24,16 @@ export const EntriesList = ({entries = []}) => (
 
 export const VoteBoard = ({pair, winner}) => (
   <div selector=".vote-board">
-    { pair && pair.length
-      ? [<VoteHandle entry={pair[0]} />,<VoteHandle entry={pair[1]} />]
-      : winner
-        ? <div selector=".vote-winner">{ winner }</div>
-        : <div selector=".vote-placeholder">There is no active voting</div> }
+    { winner
+        ? (
+          <div selector=".vote-winner">
+            <span selector=".winner-text">The winner is:</span>
+            <span selector=".winner-name">{ winner }</span>
+          </div>
+        )
+        : pair && pair.length
+           ? [<VoteHandle entry={pair[0]} />,<VoteHandle entry={pair[1]} />]
+           : <div selector=".vote-placeholder">There is no active voting</div> }
   </div>
 )
 

@@ -69,6 +69,23 @@
       cursor: default;
     }
 
+    .vote-winner {
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+
+      .winner-text {
+        font-size: 1.2rem;
+        font-weight: 400;
+        color: fade(@white-color, 35%);
+        margin: 1rem;
+      }
+
+      .winner-name {
+        font-size: 1.2rem;
+      }
+    }
+
     .vote-handle {
       width: 50%;
       display: flex;
@@ -95,7 +112,7 @@
         outline: none;
         transition: background-color .23s ease;
         text-transform: uppercase;
-        border-radius: @border-radius;
+        border-radius: (@border-radius / 2);
         &:hover {
           background-color: darken(@white-color, 20%);
         }
