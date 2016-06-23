@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "babel-node src/server/index.js",
-    "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js src/**/*_spec.js",
+    "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js ./{src,test}/**/*_spec.js --recursive",
     "test:watch": "npm run test -- --watch"
   },
   "author": "OEvgeny",

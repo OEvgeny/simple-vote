@@ -12,21 +12,28 @@ describe('store', () => {
   describe('votes', () => {
     it(`${actions.SET_ENTRIES} sets entries to the state`, () => {
       const state = votes(initial, actions.setEntries(['foo', 'bar']))
-      expect(state).to.eql(update(initial, {entries: ['foo', 'bar']}))
+      expect(state).eql(update(initial, {entries: ['foo', 'bar']}))
 
       const next = votes(state, actions.setEntries([...state.entries, 'buz']))
-      expect(next).to.eql(update(initial, {entries: ['foo', 'bar', 'buz']}))
+      expect(next).eql(update(initial, {entries: ['foo', 'bar', 'buz']}))
     })
 
     it(`${actions.SET_ENTRIES} clears previouse winner`, () => {
       const state = votes(update(initial, {winner: 'baz'}), actions.setEntries(['foo', 'bar']))
-      expect(state).to.eql(update(initial, {entries: ['foo', 'bar']}))
+      expect(state).eql(update(initial, {entries: ['foo', 'bar']}))
     })
 
     it(`${actions.NEXT} gets next pair of entries`, () => {
       const state = votes(initial, actions.setEntries(['foo', 'bar']))
       const next = votes(state, actions.next())
-      expect(next).to.eql(update(initial, {entries: [], pair: {foo: 0, bar: 0}}))
+      expect(next).eql(update(initial, {entries: [], pair: {foo: 0, bar: 0}}))
+    })
+
+    it(`${actions.NEXT} sets winner only after pair was selected`, () => {
+      const state = votes(initial, actions.setEntries(['bar']))
+      let next
+      expect(() => next = votes(state, actions.next())).throw(Error)
+      expect(next).undefined
     })
 
     it(`${actions.NEXT} sets winner then expected`, () => {
@@ -42,7 +49,7 @@ describe('store', () => {
         { type: actions.NEXT }
       ]
       const state = steps.reduce(votes, initial)
-      expect(state).to.eql(update(initial, {entries: [], winner: 'bar', pair: {baz: 0, bar: 1}}))
+      expect(state).eql(update(initial, {entries: [], winner: 'bar', pair: {baz: 0, bar: 1}}))
     })
 
     it(`${actions.VOTE} adds vote to selected entry`, () => {
@@ -52,7 +59,7 @@ describe('store', () => {
         { type: actions.VOTE, entry: 'bar'}
       ]
       const state = steps.reduce(votes, initial)
-      expect(state).to.eql(update(initial, {entries: [], pair: {foo: 0, bar: 1}}))
+      expect(state).eql(update(initial, {entries: [], pair: {foo: 0, bar: 1}}))
     })
   })
 })

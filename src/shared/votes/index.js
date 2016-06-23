@@ -3,7 +3,10 @@ import { update } from '../util'
 
 export function getPair (all) {
   const [p1, p2, ...entries] = all
-  if (p1 == null || p2 == null) throw new Error('There is no much entries to get pair')
+  if (p1 == null || p2 == null) {
+    throw new Error('There is no much entries to get pair')
+    return all
+  }
   return {entries, pair: {[p1]: 0, [p2]: 0}}
 }
 
@@ -21,5 +24,6 @@ export function vote (pair, name) {
     return update(pair, {[name]: ++pair[name]})
   } else {
     throw new Error(`Entry "${name}" is not in pair`)
+    return pair
   }
 }

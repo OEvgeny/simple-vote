@@ -24,6 +24,7 @@ function startApp () {
   store.subscribe(() => { vnode = updateUI(vnode, store) })
 
   client.on('votes', state => store.dispatch(fetchVotes(state)))
+  client.on('action', action => store.dispatch(action))
 }
 
 startApp()

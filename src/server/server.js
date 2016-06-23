@@ -6,7 +6,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware'
 
 import SocketIO from 'socket.io'
 
-export default function startSocketIO (store) {
+function startSocketIO () {
   // http server
   const compiler = webpack(config)
   const app = express()
@@ -32,13 +32,8 @@ export default function startSocketIO (store) {
 
   // socket.io server
   const io = new SocketIO().attach(8090)
-
-  store.subscribe(
-    () => io.emit('votes', store.getState().votes)
-  )
-
-  io.on('connection', socket => {
-    socket.emit('votes', store.getState().votes)
-    socket.on('action', store.dispatch.bind(store))
-  })
+  return io
 }
+
+const io = startSocketIO()
+export default io
