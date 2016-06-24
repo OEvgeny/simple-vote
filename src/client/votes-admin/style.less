@@ -1,0 +1,42 @@
+@import "../assets/less/variables";
+
+.votes-admin {
+  width: 100%;
+  height: 100%;
+  color: @font-color;
+  cursor: default;
+
+  &-header {
+    background-color: @primary-color;
+    color: @white-color;
+    padding: .85rem 1rem 1rem 1rem;
+    box-shadow: @shadow-2;
+    z-index: 1;
+    position: relative;
+
+    h1 {
+      font-weight: 300;
+      opacity: .9;
+      margin: 0;
+    }
+  }
+
+  &-main {
+    display: flex;
+    height: 100%;
+    z-index: 0;
+  }
+
+  &-sidebar {
+    padding: 2.5% 2.5% 1.5% 2.5%;
+    background-color: saturate(darken(@primary-color, 5%), -1%);
+    min-width: 15rem;
+    box-sizing: border-box;
+  }
+
+  &-content {
+    background-color: @vote-background;
+    padding: 2.5% 2.5% 1.5% 2.5%;
+    flex-grow: 1;
+  }
+}

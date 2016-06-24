@@ -27,7 +27,7 @@ export const VoteBoard = ({pair, winner}) => (
     { winner
         ? (
           <div selector=".vote-winner">
-            <span selector=".winner-text">The winner is:</span>
+            <span selector=".winner-text">The winner is</span>
             <span selector=".winner-name">{ winner }</span>
           </div>
         )
