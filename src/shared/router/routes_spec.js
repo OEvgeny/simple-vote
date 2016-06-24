@@ -7,7 +7,7 @@ import { expect } from 'chai'
 
 describe('routes reducer factory', () => {
   it('should return correct render result', () => {
-    const createComp = title => (props, {children = noop}) => `${title} with ${children() || 'no children'}`
+    const createComp = title => (props, children = noop) => `${title} with ${children() || 'no children'}`
     const routes = createRoutes({
       '/a': {
         component: createComp('A'),
@@ -27,11 +27,10 @@ describe('routes reducer factory', () => {
       `A with no children`,
       `A with A->C with no children`
     ]
-    actions.reduce((state, next) => {
-      const cur = routes(state, next)
+    actions.forEach((action, index) => {
+      const cur = routes(action)
       console.log(cur())
-      expect(cur()).equal(expected.shift())
-      return cur
-    }, null)
+      expect(cur()).equal(expected[index])
+    })
   })
 })

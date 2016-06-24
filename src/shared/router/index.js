@@ -7,7 +7,7 @@ function parsePath (path, routes) {
 }
 
 function pushState (path, router, parse) {
-  const state = router(null, parse(path))
+  const state = router(parse(path))
   global.history.pushState({}, '', `${path}`)
   return state
 }
