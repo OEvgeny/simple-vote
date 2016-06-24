@@ -30,10 +30,13 @@ function updateSubs (subscriptions, ...args) {
 
 export default function createRouter (routes) {
   let state
+  const subscriptions = []
   const router = createRoutes(routes)
   const parse = path => parsePath(path, routes)
-  const push = path => state = pushState(path, router, parse)
-  const subscriptions = []
+  const push = path => {
+    state = pushState(path, router, parse)
+    updateSubs(subscriptions, state, path)
+  }
   push(global.location.hash)
   return {
     parse,
