@@ -6,12 +6,6 @@ function parsePath (path, routes) {
   }
 }
 
-function pushState (path, router, parse) {
-  const state = router(parse(path))
-  global.history.pushState({}, '', `${path}`)
-  return state
-}
-
 function unsubscribe (subscriptions, fn) {
   const index = subscriptions.indexOf(fn)
   if (index !== -1) subscriptions.splice(index, 1)
@@ -33,11 +27,16 @@ export default function createRouter (routes) {
   const subscriptions = []
   const router = createRoutes(routes)
   const parse = path => parsePath(path, routes)
-  const push = path => {
-    state = pushState(path, router, parse)
+  const update = path => {
+    state = router(parse(path))
     updateSubs(subscriptions, state, path)
   }
-  push(global.location.hash)
+  const push = path => {
+    global.history.pushState({}, '', `${path}`)
+    update(path)
+  }
+  global.addEventListener('hashchange', () => update(location.hash))
+  update(global.location.hash)
   return {
     parse,
     push,
