@@ -16,16 +16,17 @@
 
   h1 {
     font-weight: normal;
-    font-size: .75rem;
+    font-size: .7rem;
     margin: .5rem;
-    color: lighten(@font-color, 14%);
+    color: lighten(@font-color, 30%);
+    cursor: default;
   }
 
   .voting-section {
     padding-top: .5rem;
     background-color: @primary-color;
     color: @white-color;
-    h1 { color: darken(@white-color, 14%); }
+    h1 { color: darken(@white-color, 30%); }
   }
 
   .upcoming-section {
@@ -96,16 +97,18 @@
       text-align: center;
       padding: 0 1rem;
       margin: .5rem 0 1rem 0;
+      cursor: default;
       &:first-child {
-        border-right: fade(@white-color, 20%) solid 1px;
+        border-right: fade(@white-color, 15%) solid 1px;
       }
 
       .vote-btn {
+        @btn-color: lighten(saturate(@primary-color, 5%), 65%);
         font-size: .6rem;
         padding: .4rem 1rem;
         margin: 1rem;
         color: @font-color;
-        background-color: fade(@white-color, 90%);
+        background-color: fade(@btn-color, 95%);
         cursor: pointer;
         box-shadow: @shadow-1;
         border: none;
@@ -114,7 +117,7 @@
         text-transform: uppercase;
         border-radius: (@border-radius / 2);
         &:hover {
-          background-color: darken(@white-color, 20%);
+          background-color: darken(@btn-color, 10%);
         }
       }
     }

@@ -2,7 +2,6 @@
 import snabbdom from 'snabbdom'
 import App from './App'
 import { store, client } from './client'
-import { fetchVotes } from './votes/actions'
 
 const patch = snabbdom.init([
   require('snabbdom/modules/class'),          // makes it easy to toggle classes
@@ -23,7 +22,6 @@ function startApp () {
   let vnode = updateUI(el, store)
   store.subscribe(() => { vnode = updateUI(vnode, store) })
 
-  client.on('votes', state => store.dispatch(fetchVotes(state)))
   client.on('action', action => store.dispatch(action))
 }
 

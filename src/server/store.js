@@ -3,6 +3,7 @@ import handleErrors from '../shared/reducers/handle-errors'
 import handleResponse from './respondMiddleware'
 import { votes } from '../shared/votes/reducer'
 import io from './server'
+import { createAction } from './actions'
 
 function errorHandler (err, action) {
   console.error(err, action)
@@ -11,19 +12,20 @@ function errorHandler (err, action) {
 
 function responseHandler (error, action, store) {
   const { socket } = action
-  console.log(error)
   if (socket) {
     if (error) {
+      console.log('Socket error', error)
       socket.emit('error', {error, state: store.getState()})
     }
     else {
       socket.emit('success')
-      socket.broadcast.emit('action', action)
+      console.log('Socket broadcast', createAction(action.type)(action.payload))
+      socket.broadcast.emit('action', createAction(action.type)(action.payload))
     }
   }
   else if (!error) {
-    console.log('Sending to all', action)
-    io.emit('action', action)
+    console.log('Sending to all', createAction(action.type)(action.payload))
+    io.emit('action', createAction(action.type)(action.payload))
   }
 }
 

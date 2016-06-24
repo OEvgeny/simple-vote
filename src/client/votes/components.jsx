@@ -3,12 +3,12 @@ import { html } from 'snabbdom-jsx'
 import './style.less'
 
 import { store } from '../client'
-import { vote } from '../../shared/votes/actions'
+import actions from '../actions'
 
 export const VoteHandle = ({entry}) => (
   <div selector=".vote-handle">
     <span>{ entry }</span>
-    <button on-click={store.dispatch.bind(null, vote(entry))} selector=".vote-btn" role="button">Vote!</button>
+    <button on-click={store.dispatch.bind(null, actions.vote(entry))} selector=".vote-btn" role="button">Vote!</button>
   </div>
 )
 
