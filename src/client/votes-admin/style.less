@@ -6,19 +6,30 @@
   color: @font-color;
   cursor: default;
 
+  h1, h2 {
+    font-weight: 300;
+    margin: .5rem 0 1rem 0;
+  }
+
   &-header {
     background-color: @primary-color;
-    color: @white-color;
+    color: fade(@white-color, 85%);
     padding: .85rem 1.5rem 1rem 1.5rem;
     box-shadow: @shadow-2;
     z-index: 1;
     position: relative;
 
+    a {
+      color: fade(@white-color, 70%);
+      transition: color .15s ease;
+      &:hover {
+        color: fade(@white-color, 90%);
+      }
+    }
+
     h1 {
-      font-weight: 300;
-      opacity: .9;
-      margin: 0;
       font-size: 1.8rem;
+      margin: 0;
     }
   }
 
@@ -29,15 +40,61 @@
   }
 
   &-sidebar {
-    padding: 2.5% 2.5% 1.5% 2.5%;
+    padding: .5rem 1rem;
     background-color: saturate(darken(@primary-color, 5%), -1%);
+    color: fade(@white-color, 60%);
+    font-size: .9rem;
     min-width: 12rem;
     box-sizing: border-box;
+    text-align: left;
+
+    .admin-sidebar-menu {
+      list-style: none;
+      color: inherit;
+      margin: 1rem -1rem;
+      padding: 0;
+
+      .sidebar-menu-item {
+        transition: all .2s ease;
+        .sidebar-link {
+          padding: .45rem .5rem;
+          margin: 0 .5rem;
+        }
+        &:hover {
+          background-color: fade(#000, 10%);
+          color: fade(@white-color, 80%);
+        }
+        &:not(:last-child) > .sidebar-link {
+          border-bottom: fade(@white-color, 10%) 1px solid;
+        }
+      }
+    }
+
+    .sidebar-link {
+      display: block;
+    }
   }
 
   &-content {
     background-color: @vote-background;
-    padding: 2.5% 2.5% 1.5% 2.5%;
+    padding: 1rem 2rem;
     flex-grow: 1;
+
+    h2 {
+      font-weight: 400;
+      color: fade(@font-color, 80%);
+    }
+
+    .stats-pair {
+      line-height: 1.4;
+      font-weight: 300;
+      .pair-item:not(:last-child) {
+        margin-bottom: .5rem;
+      }
+      .pair-number {
+        font-weight: 400;
+        color: lighten(@primary-color, 20%);
+      }
+    }
   }
 }

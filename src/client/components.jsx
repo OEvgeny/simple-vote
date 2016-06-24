@@ -8,5 +8,5 @@ const goto = url => event => {
 }
 
 export const Link = ({url, classes}, children) => (
-  <a selector=".link" class={classes} href={url} on-click={goto(url)}>{ children }</a>
+  <a selector=".link" classNames={classes} href={url} on-click={goto(url)}>{ children }</a>
 )

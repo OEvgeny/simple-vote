@@ -25,4 +25,4 @@ setInterval(() => {
   } else {
     store.dispatch(actions.next())
   }
-}, 6000)
+}, 20000)
