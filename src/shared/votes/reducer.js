@@ -12,7 +12,7 @@ const initialState = {
 export function votes (state = initialState, action = {}) {
   switch (action.type) {
     case SET_ENTRIES:
-      return update(state, {winner: null, entries: action.payload})
+      return update(initialState, {entries: action.payload})
     case NEXT:
       const entries = state.entries.concat(getWinners(state.pair))
       if (state.pair && entries.length === 1) return update(state, {winner: entries[0]})

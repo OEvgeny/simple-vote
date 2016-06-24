@@ -20,7 +20,7 @@ describe('store', () => {
     })
 
     it(`${SET_ENTRIES} clears previouse winner`, () => {
-      const state = votes(update(initial, {winner: 'baz'}), actions.setEntries(['foo', 'bar']))
+      const state = votes(update(initial, {winner: 'baz', pair: ['foo', 'bar']}), actions.setEntries(['foo', 'bar']))
       expect(state).eql(update(initial, {entries: ['foo', 'bar']}))
     })
 
