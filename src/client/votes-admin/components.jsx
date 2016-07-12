@@ -1,6 +1,7 @@
 /** @jsx html */
 import { html } from 'snabbdom-jsx'
 import './style.less'
+import { stateful } from '../snabbdom'
 
 import { store } from '../client'
 import actions from '../actions'
@@ -8,7 +9,8 @@ import actions from '../actions'
 import { Link } from '../components'
 
 const votesAdminSidebarLinks = [
-  {title: 'Statistics', url: '#votes-admin/stats'}
+  {title: 'Statistics', url: '#votes-admin/stats'},
+  {title: 'Voting', url: '#votes-admin/voting'}
 ]
 
 export const AdminSideBar = ({links = []}) => (
@@ -65,3 +67,52 @@ export const VoteStats = ({state}) => {
     </div>
   )
 }
+
+export const EntryView = Actions => ({entry}) => (
+  <li>
+    <div selector=".entry-title">{entry}</div>
+    <div selector=".entry-actions"><Actions entry={entry} /></div>
+  </li>
+)
+
+const VotingFactory = component => {
+  const newEntries = []
+  const testEntryHandler = ({entry}) => console.log(newEntries)
+  const addEntry = ({entry}) => {
+    newEntries.push(entry)
+    component.update()
+  }
+  const ShowEntryActions = entry => ([
+    <button role="button" on-click={[addEntry, entry]}>➤</button>
+  ])
+  const EditEntryActions = entry => ([
+    <button role="button" on-click={testEntryHandler.bind(null, entry)}>×</button>
+  ])
+
+  const ShowEntry = EntryView(ShowEntryActions)
+  const EditEntry = EntryView(EditEntryActions)
+  console.log('Constructed!')
+
+  return ({state: {votes: {entries = [], started}}}) => (
+    <div selector=".admin-voting">
+      <h2>Voting</h2>
+      {console.log(newEntries)}
+      <div selector=".entries-edit">
+        <div>
+          <h3>Current voting entries</h3>
+          <ul selector=".voting-entries">
+            { entries.map(e => (<ShowEntry entry={e} />)) }
+          </ul>
+        </div>
+        <div>
+          <h3>New voting entries</h3>
+          <ul selector=".voting-entries">
+            { newEntries.map((e, index) => (<EditEntry entry={e} key={e+index} />)) }
+          </ul>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export const Voting = stateful(VotingFactory)

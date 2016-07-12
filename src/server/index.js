@@ -16,6 +16,7 @@ io.on('connection', socket => {
   socket.on('action', action => actionHandler(store, action, socket))
 })
 
+store.dispatch(actions.startVoting())
 store.dispatch(actions.setEntries(entries))
 
 setInterval(() => {

@@ -2,7 +2,7 @@
 /** @jsx html */
 import { html } from 'snabbdom-jsx'
 import { Votes } from './votes/components'
-import { VotesAdmin, VoteStats } from './votes-admin/components'
+import { VotesAdmin, VoteStats, Voting } from './votes-admin/components'
 
 export default {
   '#votes': {
@@ -13,6 +13,9 @@ export default {
     routes: {
       'stats': {
         component: ({state}) => <VoteStats state={state} />
+      },
+      'voting': {
+        component: ({state}) => <Voting state={state} />
       }
     }
   }
