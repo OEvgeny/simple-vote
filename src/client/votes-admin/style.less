@@ -120,31 +120,65 @@
         padding: 0;
         > li {
           display: flex;
+          justify-content: space-between;
+          height: 1.8rem;
         }
         .entry-title {
           flex-grow: 1;
           line-height: 2;
         }
-        .entry-actions {
-          > button {
-            background-color: darken(@white-color, 4%);
-            outline: none;
-            border: none;
-            color: fade(@font-color, 65%);
-            cursor: pointer;
-            font-size: 1.1rem;
-            padding: 0 .4em;
-            line-height: 1.5em;
-            transition: all .18s ease;
-            &:not(:last-child) {
-              border-right: fade(#000, 8%) solid 1px;
-            }
-            &:hover {
-              background-color: lighten(@primary-color, 20%);
-              color: fade(@white-color, 70%);
-            }
+
+        input {
+          line-height: 1.1rem;
+          font-size: 1rem;
+          border: none;
+          border-bottom: 1px solid;
+          outline: none;
+          background-color: transparent;
+          margin-right: .4rem;
+          color: fade(@primary-color, 80%);
+        }
+
+        button {
+          background-color: darken(@white-color, 4%);
+          outline: none;
+          border: none;
+          color: fade(@font-color, 65%);
+          cursor: pointer;
+          font-size: 1.1rem;
+          padding: 0 .4em;
+          line-height: 1.5em;
+          transition: all .18s ease;
+          &:not(:last-child) {
+            border-right: fade(#000, 8%) solid 1px;
+          }
+          &:hover {
+            background-color: lighten(@primary-color, 20%);
+            color: fade(@white-color, 70%);
           }
         }
+      }
+    }
+  }
+
+  .admin-footer {
+    display: flex;
+    justify-content: space-between;
+    margin: 2rem 0;
+    button {
+      background-color: @primary-color;
+      font-size: .9rem;
+      padding: .5rem 1rem;
+      color: @white-color;
+      box-shadow: @shadow-1;
+      cursor: pointer;
+      border: none;
+      &:disabled {
+        background-color: desaturate(lighten(@primary-color, 20%), 10%);
+      }
+
+      + button {
+        margin-left: 1rem;
       }
     }
   }

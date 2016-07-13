@@ -75,41 +75,93 @@ export const EntryView = Actions => ({entry}) => (
   </li>
 )
 
+export const EntriesMenu = ({Actions, props = {}}, children) => (
+  <li>
+    <div>{children}</div>
+    <div selector=".entry-actions"><Actions {...props} /></div>
+  </li>
+)
+
 const VotingFactory = component => {
   const newEntries = []
-  const testEntryHandler = ({entry}) => console.log(newEntries)
+  let inputValue = ''
+
   const addEntry = ({entry}) => {
-    newEntries.push(entry)
+    if (entry && newEntries.indexOf(entry) === -1) {
+      newEntries.push(entry)
+      component.update()
+    }
+  }
+  const addAll = ({entries = []}) => {
+    newEntries.push(...entries)
     component.update()
   }
+  const removeEntry = ({entry}) => {
+    newEntries.splice(newEntries.indexOf(entry), 1)
+    component.update()
+  }
+  const removeAll = () => {
+    newEntries.splice(0, newEntries.length)
+    component.update()
+  }
+
   const ShowEntryActions = entry => ([
     <button role="button" on-click={[addEntry, entry]}>➤</button>
   ])
+  const ShowEntriesActions = entries => ([
+    <button role="button" on-click={[addAll, entries]}>➤</button>
+  ])
   const EditEntryActions = entry => ([
-    <button role="button" on-click={testEntryHandler.bind(null, entry)}>×</button>
+    <button role="button" on-click={[removeEntry, entry]}>×</button>
+  ])
+  const EditEntriesActions = entry => ([
+    <button role="button" on-click={removeAll}>×</button>
   ])
 
   const ShowEntry = EntryView(ShowEntryActions)
   const EditEntry = EntryView(EditEntryActions)
-  console.log('Constructed!')
 
   return ({state: {votes: {entries = [], started}}}) => (
     <div selector=".admin-voting">
       <h2>Voting</h2>
-      {console.log(newEntries)}
       <div selector=".entries-edit">
         <div>
           <h3>Current voting entries</h3>
           <ul selector=".voting-entries">
-            { entries.map(e => (<ShowEntry entry={e} />)) }
+            { [
+              <EntriesMenu Actions={ShowEntriesActions} props={{ entries }} />
+            ].concat(entries.map(e => (<ShowEntry entry={e} />))) }
           </ul>
         </div>
         <div>
           <h3>New voting entries</h3>
           <ul selector=".voting-entries">
-            { newEntries.map((e, index) => (<EditEntry entry={e} key={e+index} />)) }
+            { [
+              <EntriesMenu Actions={EditEntriesActions}>
+                <input type="text" value={inputValue} on-input={({target}) => inputValue = target.value} />
+                <button on-click={(event) => addEntry({entry: inputValue})}>Add</button>
+              </EntriesMenu>
+            ].concat(newEntries.map((e, index) => (<EditEntry entry={e} />))) }
           </ul>
         </div>
+      </div>
+      <div selector=".admin-footer">
+        <div>
+          <button
+              role="button"
+              on-click={[store.dispatch, started ? actions.stopVoting() : actions.startVoting()]}>
+            {started ? 'Stop voting' : 'Start voting'}
+          </button>
+          <button role="button" on-click={[store.dispatch, actions.next()]}>
+            Next voting
+          </button>
+        </div>
+        <button
+            role="button"
+            disabled={started}
+            on-click={[store.dispatch, actions.setEntries(newEntries)]}>
+          Update
+        </button>
       </div>
     </div>
   )
