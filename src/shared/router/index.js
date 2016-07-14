@@ -1,9 +1,29 @@
 import createRoutes from './routes'
 
-function parsePath (path, routes) {
-  return {
-    route: path.split('/')
+export function parsePath (path, routes) {
+  const route = path.split('/')
+  const params = {}
+  let currentRoute = routes
+  let level = 0
+  while (currentRoute != null && level < route.length) {
+    if (currentRoute[route[level]]) {
+      currentRoute = currentRoute[route[level]].routes
+      level++
+    } else {
+      const propPaths = Object.keys(currentRoute)
+        .filter(key => key[0] === ':')
+      if (propPaths.length > 1) {
+        console.warn('Supported only one custom prop per route.')
+      }
+      if (propPaths.length !== 0) {
+        const pathSegment = propPaths[0].substr(1)
+        params[pathSegment] = route[level]
+        currentRoute = currentRoute[propPaths[0]].routes
+        level++
+      } else { break }
+    }
   }
+  return { route, params }
 }
 
 function unsubscribe (subscriptions, fn) {

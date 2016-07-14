@@ -2,7 +2,7 @@
 /* global describe, it */
 
 import { votes } from './reducer'
-import {SET_ENTRIES, NEXT, VOTE} from '../actions'
+import {SET_ENTRIES, NEXT, VOTE, START_VOTING, STOP_VOTING} from '../actions'
 import { expect } from 'chai'
 import { update, actionCreators } from '../util'
 
@@ -40,6 +40,7 @@ describe('store', () => {
     it(`${NEXT} sets winner then expected`, () => {
       const steps = [
         { type: SET_ENTRIES, payload: ['foo', 'bar', 'baz'] },
+        { type: START_VOTING },
         { type: NEXT },
         { type: VOTE, payload: 'bar'},
         { type: NEXT },
@@ -47,7 +48,8 @@ describe('store', () => {
         { type: NEXT },
         { type: VOTE, payload: 'bar'},
         { type: NEXT },
-        { type: NEXT }
+        { type: NEXT },
+        { type: STOP_VOTING }
       ]
       const state = steps.reduce(votes, initial)
       expect(state).eql(update(initial, {entries: [], winner: 'bar', pair: {baz: 0, bar: 1}}))
@@ -56,8 +58,10 @@ describe('store', () => {
     it(`${VOTE} adds vote to selected entry`, () => {
       const steps = [
         { type: SET_ENTRIES, payload: ['foo', 'bar'] },
+        { type: START_VOTING },
         { type: NEXT },
-        { type: VOTE, payload: 'bar'}
+        { type: VOTE, payload: 'bar'},
+        { type: STOP_VOTING }
       ]
       const state = steps.reduce(votes, initial)
       expect(state).eql(update(initial, {entries: [], pair: {foo: 0, bar: 1}}))
