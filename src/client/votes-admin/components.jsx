@@ -93,7 +93,8 @@ const VotingFactory = component => {
     }
   }
   const addAll = ({entries = []}) => {
-    newEntries.push(...entries)
+    const entriesToAdd = entries.filter(e => newEntries.indexOf(e) === -1)
+    newEntries.push(...entriesToAdd)
     component.update()
   }
   const removeEntry = ({entry}) => {
